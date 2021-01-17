@@ -1,5 +1,4 @@
-import { createContext, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { createContext, useContext } from "react";
 import firebase from "../firebase";
 import { useAuthState } from "../hooks/auth";
 import AuthService, { IAuthService } from "../services/auth";
@@ -16,12 +15,6 @@ const AuthContext = createContext<IAuthContext>({
 
 const AuthProvider: React.FC = ({ children }) => {
   const { isLoading, user } = useAuthState();
-  const history = useHistory();
-
-  useEffect(() => {
-    if (user === null) return history.push("/signin");
-    else return history.push("/");
-  }, [user, history]);
 
   console.log({ isLoading, user });
 

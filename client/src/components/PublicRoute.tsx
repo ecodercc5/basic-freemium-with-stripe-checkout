@@ -1,11 +1,11 @@
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import firebase from "../firebase";
+import { useAuth } from "../provider/AuthProvider";
 
-const UnAuthRoute: React.FC<RouteProps> = ({
+const PublicRoute: React.FC<RouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const user = firebase.auth().currentUser;
+  const { user } = useAuth();
 
   if (!Component) return null;
 
@@ -19,4 +19,4 @@ const UnAuthRoute: React.FC<RouteProps> = ({
   );
 };
 
-export default UnAuthRoute;
+export default PublicRoute;

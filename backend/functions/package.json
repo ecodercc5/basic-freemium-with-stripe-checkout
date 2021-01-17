@@ -3,7 +3,8 @@
   "scripts": {
     "lint": "eslint \"src/**/*\"",
     "build": "tsc",
-    "serve": "npm run build && firebase emulators:start",
+    "watch": "tsc -w",
+    "serve": "firebase emulators:start",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -14,8 +15,10 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "firebase-admin": "^9.2.0",
-    "firebase-functions": "^3.11.0"
+    "firebase-functions": "^3.11.0",
+    "stripe": "^8.131.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.9.1",

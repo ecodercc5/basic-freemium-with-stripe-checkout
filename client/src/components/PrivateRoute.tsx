@@ -1,11 +1,11 @@
 import { Redirect, Route, RouteProps } from "react-router-dom";
-import firebase from "../firebase";
+import { useAuth } from "../provider/AuthProvider";
 
 const PrivateRoute: React.FC<RouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const user = firebase.auth().currentUser;
+  const { user } = useAuth();
 
   if (!Component) return null;
 
