@@ -1,14 +1,4 @@
-import * as functions from "firebase-functions";
-import * as dotenv from "dotenv";
 import onCreateUser from "./onCreateUser";
+import api from "./api";
 
-dotenv.config();
-
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
-
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
-
-export { onCreateUser };
+export { api, onCreateUser };
