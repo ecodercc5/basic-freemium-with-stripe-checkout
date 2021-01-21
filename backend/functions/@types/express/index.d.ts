@@ -5,6 +5,7 @@ declare global {
   namespace Express {
     interface Request {
       userClaims?: admin.auth.DecodedIdToken;
+      rawBody?: Buffer;
     }
   }
 }

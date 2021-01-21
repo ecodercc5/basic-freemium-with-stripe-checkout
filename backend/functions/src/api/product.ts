@@ -8,7 +8,7 @@ const router = Router();
 
 const PRODUCT_ID = "price_1IBoQzJ9xLF03qVYwcRmWZSF";
 
-router.get("/checkout", isAuth, async (req, res) => {
+router.post("/checkout", isAuth, async (req, res) => {
   // get the user uid
   const uid = req.userClaims?.uid as string;
 
