@@ -7,21 +7,25 @@ interface IAuthContext {
   user: firebase.User | null;
   auth: IAuthService;
   claims: IUserClaims | null;
+  refreshClaims: () => Promise<any>;
 }
 
 const AuthContext = createContext<IAuthContext>({
   user: null,
   auth: AuthService,
   claims: null,
+  refreshClaims: async () => {},
 });
 
 const AuthProvider: React.FC = ({ children }) => {
-  const { isLoading, user, claims } = useAuthState();
+  const { isLoading, user, claims, refreshClaims } = useAuthState();
 
   console.log({ isLoading, user });
 
   return (
-    <AuthContext.Provider value={{ user, auth: AuthService, claims }}>
+    <AuthContext.Provider
+      value={{ user, auth: AuthService, claims, refreshClaims }}
+    >
       {isLoading ? <div>loading</div> : children}
     </AuthContext.Provider>
   );

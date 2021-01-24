@@ -1,14 +1,15 @@
 import { useAuth } from "../provider/AuthProvider";
 import { useStripe } from "../provider/StripeProvider";
-import * as productApi from "../api/product";
+import * as premiumApi from "../api/premium";
+import { NonPremium, Premium } from "../components/Premium";
 
 const Dashboard = () => {
-  const { auth, claims } = useAuth();
+  const { auth, claims, refreshClaims } = useAuth();
   const stripe = useStripe();
 
   const handleGetPremium = async () => {
     // create a session
-    const session = await productApi.getProductCheckoutSession();
+    const session = await premiumApi.getCheckoutSession();
 
     if (!stripe) return;
 
@@ -19,19 +20,29 @@ const Dashboard = () => {
     return auth.signOut();
   };
 
-  console.log({ claims });
+  const handleCancelSubscription = () => {
+    console.log("Canceling subscription");
 
-  console.log({ isPremium: claims?.isPremium });
+    premiumApi
+      .cancelSubscription()
+      .then(refreshClaims)
+      .catch(() => console.log("Error canceling subscription"));
+  };
+
+  console.log({ claims });
 
   return (
     <div>
       <h1>Dashboard</h1>
-      <h2>
-        {claims?.isPremium
-          ? "You are a premium user"
-          : "You are not a premium user"}
-      </h2>
-      <button onClick={handleGetPremium}>Get Premium</button>
+      <Premium>
+        <h2>You are a premium user</h2>
+        <button onClick={handleCancelSubscription}>Cancel Subscription</button>
+      </Premium>
+      <NonPremium>
+        <h2>You are not a premium user</h2>
+        <button onClick={handleGetPremium}>Get Premium</button>
+      </NonPremium>
+
       <button onClick={handleSignout}>Sign Out</button>
     </div>
   );
