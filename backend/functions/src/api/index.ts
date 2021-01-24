@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import express from "express";
 import cors from "cors";
-import productApi from "./product";
+import premiumApi from "./premium";
 import stripeApi from "./stripe";
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(
   })
 );
 
-app.use("/product", productApi);
+app.use("/premium", premiumApi);
 app.use("/stripe", stripeApi);
 
 const api = functions.https.onRequest(app);

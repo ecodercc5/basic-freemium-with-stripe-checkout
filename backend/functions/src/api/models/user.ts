@@ -5,6 +5,9 @@ interface UserProps {
   email: string;
   stripeId: string;
   uid: string;
+  active?: boolean;
+  isPremium?: boolean;
+  subscriptionId?: string;
 }
 
 export class User {
@@ -12,19 +15,32 @@ export class User {
   email: string;
   stripeId: string;
   uid: string;
+  active?: boolean;
+  isPremium?: boolean;
+  subscriptionId?: string;
 
-  constructor({ displayName, email, stripeId, uid }: UserProps) {
+  constructor({
+    displayName,
+    email,
+    stripeId,
+    uid,
+    active,
+    isPremium,
+    subscriptionId,
+  }: UserProps) {
     this.displayName = displayName;
     this.email = email;
     this.stripeId = stripeId;
     this.uid = uid;
+    this.active = active;
+    this.isPremium = isPremium;
+    this.subscriptionId = subscriptionId;
   }
 }
 
 export const UserConverter = {
   toFirestore: (user: User): firestore.DocumentData => {
-    const { displayName, email, stripeId, uid } = user;
-    return { displayName, email, stripeId, uid };
+    return Object.assign({}, user);
   },
 
   fromFirestore: (snapshot: firestore.QueryDocumentSnapshot) => {
